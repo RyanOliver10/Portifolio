@@ -1,0 +1,297 @@
+@import url('https://fonts.googleapis.com/css2? family = Roboto + Slab & display = swap');
+
+html,
+body {
+    scroll-behavior: smooth;
+    font-family: sans-serif;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 0;
+}
+
+/*cabeçalho*/
+
+.main-content {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.7)), url("../img/fundocontador.jpg");
+    background-size: cover;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.aside {
+    justify-content: space-between;
+    align-items: baseline;
+    display: flex;
+    color: orange;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.aside h2 {
+    display: block;
+    height: 5rem;
+}
+
+.aside h2 img {
+    height: 100%;
+}
+
+.aside nav ul {
+    display: flex;
+    list-style: none;
+}
+
+.aside li:hover {
+    background: orange;
+    transition: 500ms;
+}
+
+.aside li a:hover {
+    color: black;
+    transition: 500ms;
+}
+
+.aside li a {
+    padding: 10px;
+    align-content: center;
+    text-decoration: none;
+    color: orange;
+    font-size: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .aside {
+        display: flex;
+    }
+}
+
+@media (max-width: 600px) {
+
+    img {
+        width: 70%;
+    }
+
+    .aside {
+        display: grid;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .aside nav ul {
+        padding: 0;
+    }
+
+    .meu-portifolio div {
+        width: 90vw;
+    }
+}
+
+@media (max-width: 320px) {
+    .aside {
+        text-align: center;
+    }
+
+    .aside nav ul {
+        padding: 0;
+        display: block;
+    }
+
+    .aside li {
+        padding: 5px;
+    }
+}
+
+/*apresentação*/
+
+#myphoto {
+    width: 40vw;
+    height: 15vh;
+}
+
+.section-apresentation {
+    align-content: center;
+    justify-content: center;
+    display: grid;
+    text-align: center;
+    color: springgreen;
+    margin-bottom: 4rem;
+}
+
+.apresentation {
+    padding: 20px;
+}
+
+.apresentation h1 {
+    text-transform: uppercase;
+}
+
+.apresentation h2 {
+    margin-bottom: 0.5rem;
+}
+
+.apresentation p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+@media (max-width: 320px) {
+    .apresentation img {
+        width: 80%;
+        height: 80%;
+    }
+
+    img {
+        width: 100%;
+    }
+}
+
+/*portifolio*/
+
+main {
+    animation: changeBackgroundColor 10s infinite;
+
+}
+
+@keyframes changeBackgroundColor {
+    0% {
+        background-color: #041b33;
+    }
+
+    25% {
+        background-color: #360a0a;
+    }
+
+    50% {
+        background-color: #270425;
+    }
+
+    75% {
+        background-color: #06343f;
+    }
+
+    100% {
+        background-color: #041b33;
+    }
+}
+
+.meu-portifólio {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: rgb(234, 238, 23);
+    font-weight: bolder;
+    display: contents;
+} 
+
+.portfolio {
+    box-sizing: border-box;
+    display: block;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+.cards {
+    display: grid;
+    width: 90%;
+    max-width: 980px;
+    margin: auto;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 20px;
+    padding-bottom: 4rem;
+}
+
+.text--medium {
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    font-weight: 400;
+    color: #ecf0f1;
+}
+
+.card {
+    text-decoration: none;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    background-color: green;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+
+}
+
+.card:hover {
+    transform: translateY(-7px);
+}
+
+.image {
+    width: 100%;
+    padding-top: 56.25%;
+    /* 16:9 */
+
+    overflow: hidden;
+    position: relative;
+}
+
+.image img {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.content {
+    margin: 20px;
+}
+
+.title {
+    margin-bottom: 10px;
+}
+
+.info {
+    display: flex;
+    align-self: end;
+    align-items: center;
+}
+
+/*rodape*/
+
+.sobre-mim {
+    background-image: url(../img/flat-mountains.svg);
+    background-size: cover;
+    height: 30vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.sobre-mim h2 {
+    color: white;
+    padding: 1rem;
+}
+
+.sobre-mim ul {
+    padding: 5px 0;
+    display: flex;
+    justify-content: center
+}
+
+.sobre-mim li {
+    list-style: none;
+    padding: 0 5px;
+}
+
+.sobre-mim a {
+    text-decoration: none;
+    color: white;
+}
