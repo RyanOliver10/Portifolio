@@ -156,32 +156,31 @@ img {
     }
 }
 
-/*portifolio*/
+/*portifólio*/
 
 main {
     animation: changeBackgroundColor 10s infinite;
-
 }
 
 @keyframes changeBackgroundColor {
     0% {
-        background-color: #041b33;
+        background-color: #031425;
     }
 
     25% {
-        background-color: #360a0a;
+        background-color: #220606;
     }
 
     50% {
-        background-color: #270425;
+        background-color: #20011f;
     }
 
     75% {
-        background-color: #06343f;
+        background-color: #02222b;
     }
 
     100% {
-        background-color: #041b33;
+        background-color: #031425;
     }
 }
 
@@ -191,7 +190,7 @@ main {
     color: rgb(234, 238, 23);
     font-weight: bolder;
     display: contents;
-} 
+}
 
 .portfolio {
     box-sizing: border-box;
@@ -212,8 +211,8 @@ main {
 }
 
 .text--medium {
-    font-size: 1.6rem;
-    line-height: 2.6rem;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
     font-weight: 400;
     color: #ecf0f1;
 }
@@ -255,7 +254,7 @@ main {
 }
 
 .title {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .info {
@@ -267,7 +266,9 @@ main {
 /*rodape*/
 
 .sobre-mim {
-    background-image: url(../img/flat-mountains.svg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.7)), url("../img/fundocontador.jpg");
+    background-size: cover;
     background-size: cover;
     height: 30vh;
     justify-content: center;

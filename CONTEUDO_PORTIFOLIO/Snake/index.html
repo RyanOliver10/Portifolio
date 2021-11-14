@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1.0">
+    <title>Snake</title>
+</head>
+
+<body>
+    <script>
+
+        //variáveis do jogo
+        var canvas, ctx, width, heigth, fps, tileSize, playing;
+        var snake, playLabel;
+        var globalTouch = [], offset = [];
+
+        var keys = {
+            left: 37,
+            up: 38,
+            rigth: 39,
+            down: 40,
+
+        }
+
+        //métodos de ouvir eventos
+        window.addEventListener("touchstart", touchStart);
+        window.addEventListener("touchmove", touchMove);
+        window.addEventListener("touchend", touchEnd);
+
+        window.addEventListener("keydown", keyDown);
+
+        window.addEventListener("resize", resizeWindow);
+
+        //as 3 funções seguidas estabelecem o controle da snake para dispositivos mobile
+        function touchEnd(e) {
+            if (Math.abs(offset[0]) > Math.abs(offset[1]))
+                snake.direction = [offset[0] / Math.abs(offset[0]), 0];
+
+            else
+                snake.direction = [0, offset[1] / Math.abs(offset[1])];
+
+        }
+
+        function touchMove(e) {
+            var touch = e.touches[0];
+
+            offset = [touch.pageX - globalTouch[0], touch.pageY - globalTouch[1]];
+        }
+
+        function touchStart(e) {
+            e.preventDefault();
+
+            var touch = e.touches[0];
+            globalTouch = [touch.pageX, touch.pageY];
+        }
+
+        //função que estabelece comandos para controlar a snake com teclado
+        function keyDown(e) {
+
+            if (!playing && (e.keyCode == keys.up || e.keyCode == keys.left || e.keyCode == keys.down || e.keyCode == keys.rigth))
+                playing = true;
+
+            console.log(e.keyCode);
+            switch (e.keyCode) {
+                case keys.left:
+                    snake.direction = [-1, 0];
+                    break;
+
+                case keys.up:
+                    snake.direction = [0, -1];
+                    break;
+
+                case keys.rigth:
+                    snake.direction = [1, 0];
+                    break;
+
+                case keys.down:
+                    snake.direction = [0, 1];
+                    break;
+            }
+        }
+
+        //função que controla as janelas dos dispositivos
+        function resizeWindow() {
+            width = window.innerWidth;
+            heigth = window.innerHeight;
+
+            canvas.width = width;
+            canvas.height = heigth;
+        }
+
+        function isMobileDevice() {
+            return /Android|iPhone|ipad|ipod|Windows Phone/i.test(navigator.userAgent);
+        }
+
+        //função que estabelece parãmetros para a função draw
+        function init() {
+            canvas = document.createElement("canvas")
+            resizeWindow();
+
+            tileSize = Math.max(Math.floor(width / 60), Math.floor(heigth / 60));
+
+            document.body.appendChild(canvas);
+            ctx = canvas.getContext('2d');
+
+            fps = 15;
+
+            newGame();
+            run();
+        }
+
+        //função que inicia um novo jogo
+        function newGame() {
+            snake = new Snake();
+            playLabel = new PlayLabel();
+
+            playing = false;
+        }
+
+        //função que auxilia o jogador no começo do jogo
+        function PlayLabel() {
+            this.text;
+            this.color = "red";
+            this.messages = {
+                portrait: "Rotacione o dispositivo para poder jogar",
+                landscape: "Arraste a tela para jogar",
+                pc: "Pressione as setas para jogar"
+
+            };
+
+            if (isMobileDevice()) {
+
+            }
+            
+            else {
+                this.text = this.messages["pc"];
+            }
+            this.draw = function () {
+                ctx.fillStyle = this.color;
+                ctx.font = tileSize * 2 + "px Arial";
+                ctx.fillText(this.text, width / 2 - ctx.measureText(this.text).width / 2, heigth / 2);
+            }
+        }
+
+        //função que controla a snake
+        function Snake() {
+            this.body = [[10, 10], [10, 11], [10, 12]];
+            this.color = "#000";
+            this.direction = [0, -1];
+
+            this.update = function () {
+                var nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
+
+                if (!playing) {
+                    if (this.direction[1] == -1 && nextPos[1] <= (heigth * 0.1 / tileSize))
+                        this.direction = [1, 0];
+
+                    else if (this.direction[0] == 1 && nextPos[0] >= (width * 0.9 / tileSize))
+                        this.direction = [0, 1];
+
+                    else if (this.direction[1] == 1 && nextPos[1] >= (heigth * 0.9 / tileSize))
+                        this.direction = [-1, 0];
+
+                    else if (this.direction[0] == -1 && nextPos[0] <= (heigth * 0.1 / tileSize))
+                        this.direction = [0, -1];
+                }
+
+                if (nextPos[0] == this.body[1][0] && nextPos[1] == this.body[1][1]) {
+                    this.body.reverse();
+                    nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
+                }
+
+                this.body.pop();
+                this.body.splice(0, 0, nextPos);
+            }
+
+            this.draw = function () {
+                ctx.fillStyle = this.color;
+
+                for (var i = 0; i < this.body.length; i++) {
+                    ctx.fillRect(this.body[i][0] * tileSize, this.body[i][1] * tileSize, tileSize, tileSize);
+                }
+            }
+        }
+
+        //função que atualiza dados na tela
+        function update() {
+            snake.update();
+        }
+
+        //função que executa ações do jogo
+        function run() {
+            update();
+            draw();
+
+            setTimeout(run, 1000 / fps);
+        }
+
+
+        //função que desenha objetos na tela
+        function draw() {
+            ctx.clearRect(0, 0, width, heigth);
+
+            snake.draw();
+
+            if(!playing)
+                playLabel.draw();
+        }
+
+        init();
+
+    </script>
+
+    <style>
+
+        /*estilo do jogo*/
+        html,
+        body {
+            background: orange;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            background-color: orange;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
+
+</body>
+
+</html>
